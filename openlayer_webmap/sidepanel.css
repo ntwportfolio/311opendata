@@ -1,0 +1,305 @@
+#sidePanel {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 20%;
+    height: 100%;
+    padding: 1em;
+    overflow: hidden;
+    max-height: 100%;
+    font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  #sliderContainer{
+    position: absolute;
+    width: 18%;
+    bottom: 5%;
+    left: 0;
+    background-color: white;
+    padding: 0.5%;
+    height: 10%;
+    overflow: hidden;
+    border-top: solid 1px #DEDEDE;
+    margin-left: 1%;
+  }
+  
+  #searchBar {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  #sliderDiv {
+    width: 100%;
+    display: flex;
+    height: auto;
+    margin-top: 2rem;
+  }
+  
+  #tabsContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+  }
+  
+  #tab3, #tab2, #tab1 {
+    transition: content 1s ease;
+    flex-direction: column;
+  }
+  
+  #tab2Container {
+    height: 100%;
+  }
+  
+  #tab3Container, #tab1Container {
+    height: 78%;
+  }
+  
+  #tab3Container, #tab2Container, #tab1Container {
+    scrollbar-width: thin;
+    scrollbar-color: #DEDEDE white;
+    flex-direction: column;
+    overflow: auto;
+  }
+  
+  #tab3, #tab1, #tab1Container, #tab3Container {
+    display: none;
+    /* overflow: auto; */
+  }
+  
+  #tab1Button, #tab2Button, #tab3Button {
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    padding: 15px 0px;
+    width: 50%;
+    background: none;
+    border: none;
+    border-bottom-color: inherit;
+    border-bottom-style: inset;
+    border-bottom-width: 3px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-bottom-color .1s linear;
+  }
+  
+  #tab1Button:hover, 
+    #tab3Button:hover, 
+    #tab2Button:hover, 
+    #tab1Button.active, 
+    #tab3Button.active, 
+    #tab2Button.active {
+    border-bottom: 3px inset dodgerblue;
+    color: rgb(11, 66, 148);
+    font-weight: bolder;
+  }
+  
+  #tab2 {
+    /* overflow: auto; */
+    height: 75%;
+  }
+  
+  @media (max-width: 1024px) {
+    #tabsContainer {
+      flex-direction: column;
+      /* height: 30%; */
+    }
+    #tab1Button, #tab3Button, #tab2Button {
+      width: 100%;
+    }
+  }
+  
+  .listButton {
+    padding: 7px;
+    /* border: 1px solid #DEDEDE; */
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+    margin-right: 5px;
+  }
+  
+  dt {
+    margin-bottom: 12px;
+  }
+  
+  /* #searchTitle, 
+  #filterTitle, 
+  #actionBtnsTitle,
+  #rectSelectTitle, 
+  #attTableTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+  } */
+  
+  .listTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .projList {
+    width: 90%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #DEDEDE;
+  }
+  
+  .downloadBtn {
+    cursor: pointer;
+    color: #191970;
+    background-color: transparent;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2), 0px 3px 5px 0px rgba(0, 0, 0, 0.19);
+    border-radius: 50%;
+    padding: 6px;
+  }
+  
+  #attributesContent {
+    align-items: center;
+    margin-bottom: 2vh;
+  }
+  
+  #searchList, 
+  #filterList, 
+  #actionBtnsList,
+  #attTableList,
+  #rectSelectList,
+  #memberList,
+  #exportBtnList,
+  #attributesList {
+    border-top: 1px solid #DEDEDE;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+  }
+  
+  #searchContent, 
+  #filterContent, 
+  #actionBtnsContent,
+  #attTableContent,
+  #rectSelectContent,
+  #attributesContent,
+  #exportBtnContent,
+  #memberContent {
+    display: none;
+    overflow-y: auto;
+  }
+  
+  #searchIcon, 
+  #filterIcon, 
+  #actionBtnsIcon,
+  #rectSelectIcon,
+  #attTableIcon,
+  #memberIcon,
+  #exportBtnIcon,
+  #attributesIcon,
+  #moveRecIcon,
+  #resizeRecIcon,
+  #modifyRecShapeIcon,
+  #changeYearRecIcon {
+    cursor: pointer;
+  }
+  
+  #listContainer {
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
+  }
+  #actionBtnsList, #memberList, #modifySelList {
+    border-bottom: 1px solid #DEDEDE;
+  }
+  
+  .repList {
+    margin-bottom: 25px;
+  }
+  
+  #listContainer button{
+    border: 1px solid rgb(11, 66, 148);
+    padding: 5px 10px;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+    width: 30%;
+  }
+  
+  .apiLink {
+    text-decoration: none;
+    color: rgb(11, 66, 148);
+  }
+  
+  p, dt, dd {
+    font-size: medium;
+    line-height: 22px;
+  }
+  
+  #memberContent {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2vh;
+  }
+  
+  #modifySelList {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-bottom: 2vh;
+  }
+  
+  .contentList {
+    display: none;
+  }
+  
+  #boundariesList, #modifySelList {
+    width: 90%;
+    color: black;
+  }
+  
+  #boundariesList span {
+    cursor: pointer;
+  }
+  
+  #modifySelList .listTitle {
+    border-top: 1px solid #DEDEDE;
+    padding: 0px 10px;
+  }
+  
+  #boundariesList .listTitle {
+    border-top: 1px solid #DEDEDE;
+    padding: 0px 10px;
+  }
+  
+  #congressContent,
+  #assemblyContent,
+  #senateContent,
+  #cityCounContent {
+    background-color: white;
+    /* border-left:  3px solid #C8E2FC;
+    border-right:  3px solid #C8E2FC; */
+    padding: 0 4% 4% 4%;
+  }
+  
+  #moveRecContent,
+  #resizeRecContent,
+  #modifyRecShapeContent,
+  #changeYearRecContent {
+    padding: 0 4%;
+  }
+  
+  .membersBtn {
+    width: 80%;
+  }
+  
+  #layerContainer, .esri-layer-list__item-container {
+    font-size: 1rem;
+  }
+  
+  #layerContainer{
+    overflow-y: none;
+  }
+  
+  .esri-slider__label {
+    background-color: rgb(255, 255, 255, 0.6);
+  }
+  

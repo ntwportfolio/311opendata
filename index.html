@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>DOT 311 Complaints</title>
+   <link rel="stylesheet" href="./openlayer_webmap/styles.css">
+   <link rel="stylesheet" href="./openlayer_webmap/libs/openlayersv9.2.3-package/ol.css">
+   <!-- jQuery -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <!-- Ion.RangeSlider CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css">
+   <!-- Ion.RangeSlider JS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+   <!-- Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+   <!-- Select2 CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+   <!-- Select2 JS -->
+   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   <!--choices-->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+
+</head>
+<body>
+
+   
+    <!-- map container -->
+  <div id="map" class="map"></div>
+  
+  <!-- basemap switcher -->
+  <div id="basemapSwitcher">
+    <button data-basemap="CartoDBPositron">Grayscale</button>
+    <button data-basemap="Satellite">Satellite</button>
+  </div>
+
+  
+  <div id="sidebar">
+    <!-- tab links -->
+    <div class="tab">
+      <button class="custom-button" onclick="openCity(event, 'Filters')" id="defaultOpen">Filters</button>
+      <button class="custom-button" onclick="openCity(event, 'Information')">Information</button>
+    </div>
+
+    <!-- tab content -->
+    <div id="Filters" class="tabcontent">
+        <h3>Use the categories below to filter 311 complaints</h3>
+        <!-- data counter -->
+           <div id="counter-section">
+            <h4>Complaints Displayed: <span id="data-counter">0</span></h4>
+            </div>
+        
+           <div class="select-container">
+               <label for="borough">Borough:</label>
+               <select id="borough" multiple="multiple" style="width: 100%;">
+                   <option value="BRONX">Bronx</option>
+                   <option value="BROOKLYN">Brooklyn</option>
+                   <option value="MANHATTAN">Manhattan</option>
+                   <option value="QUEENS">Queens</option>
+                   <option value="STATEN ISLAND">Staten Island</option>
+               </select>
+           </div>
+           
+
+
+
+
+           
+           
+           
+           
+           
+           
+           <div class="select-container">
+            <label for="createdDate">Created Date:</label>
+            <input type="date" id="createdDate" onchange="filterMarkers()">
+        </div>
+        <div class="select-container">
+            <label for="closedDate">Closed Date:</label>
+            <input type="date" id="closedDate" onchange="filterMarkers()">
+        </div>
+        
+           <div class="select-container">
+               <label for="status">Status:</label>
+               <select id="status">
+                   <option value="">All</option>
+                   <option value="Open">Open</option>
+                   <option value="Closed">Closed</option>
+               </select>
+           </div>
+
+
+
+
+
+           <label for="range-slider">Filter by Year Created</label>
+           <input type="text" id="range-slider">
+
+
+
+
+
+<!--colors-->
+<label for="color-select">Category</label>
+<select id="color-select" multiple="multiple">
+    <option value="Bus Stop Shelter">Bus Stop Shelter</option>
+    <option value="Curb Condition">Curb Condition</option>
+    <option value="E-Scooter">E-Scooter</option>
+    <option value="Highway Condition">Highway Condition</option>
+    <option value="Outdoor Dining">Outdoor Dining</option>
+    <option value="Street Condition">Street Condition</option>
+    <option value="Traffic Signal Condition">Traffic Signal Condition</option>
+</select>
+
+<label for="shape-select">Description</label>
+<select id="shape-select" multiple="multiple" style="display:none;">
+    <!-- dynamically populated -->
+</select>
+
+
+</div>
+<!-- end filter tab content -->
+
+
+
+<!-- Information tab content -->
+<div id="Information" class="tabcontent">
+        <p>Select a feature on the map to see its details here.</p>
+    </div>
+</div>
+
+</div>
+<!-- end information tab content -->
+
+<script>
+// Tab switching function
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Open default tab
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+
+
+
+   
+
+   <div id="toggleBtn"></div>
+
+
+
+
+  
+
+
+   <!-- modal -->
+   <div id="infoModal" class="modal">
+       <div class="modal-content">
+           <span class="close">&times;</span>
+           <div id="modal-body">
+               <h2>311 DOT Service Requests from 2019 to Present</h2>
+               <h2>About</h2>
+       <div>
+           <h3>Last Updated</h3>
+           <p>July 17, 2024</p>
+       </div>
+       <div>
+           <h3>Data Provided By</h3>
+           <p>https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9/about_data</p>
+       </div>
+           </div>
+       </div>
+   </div>
+    <!-- info button -->
+   <div class="info-icon">
+       <i class="fas fa-info-circle"></i>
+   </div>
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+<!--keep script src at bottom for better page performance-->
+<!-- OpenLayers JavaScript library -->
+<script src="./openlayer_webmap/libs/openlayersv9.2.3-package/dist/ol.js"></script>
+<!--custom scripts -->
+<script src="./openlayer_webmap/main.js"></script>
+<script src="second.js"></script>
+<script src="./openlayer_webmap/scripts.js"></script>
+
+</body>
+</html>
