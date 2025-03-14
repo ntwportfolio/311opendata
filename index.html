@@ -8,6 +8,7 @@
    <link rel="stylesheet" href="./openlayer_webmap/libs/openlayersv9.2.3-package/ol.css">
    <!-- jQuery -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <!-- Ion.RangeSlider CSS -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css">
    <!-- Ion.RangeSlider JS -->
@@ -23,22 +24,70 @@
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+
+
+
 
 
 </head>
 <body>
-
+    <header>
+        <nav class="navbar">
+            <div class="navbar-header">
+                <div class="navbar-title">Department of Transportation 311 Data</div>
+                <button type="button" id="select-area-btn" class="navbar-toggle collapsed" aria-label="Toggle area selection">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-menu">
+            </div>
+        </nav>
+    </header>
    
     <!-- map container -->
+    <div id="map-container">
   <div id="map" class="map"></div>
-  
+
+  <!-- modal -->
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body">
+            <h2>311 DOT Service Requests from 2019 to Present</h2>
+            <h2>About</h2>
+    <div>
+        <h3>Last Updated</h3>
+        <p>July 17, 2024</p>
+    </div>
+    <div>
+        <h3>Data Provided By</h3>
+        <p>https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9/about_data</p>
+    </div>
+        </div>
+    </div>
+</div>
+ <!-- info button -->
+<div class="info-icon">
+    <i class="fas fa-info-circle"></i>
+</div>
+  </div>
+
   <!-- basemap switcher -->
   <div id="basemapSwitcher">
     <button data-basemap="CartoDBPositron">Grayscale</button>
     <button data-basemap="Satellite">Satellite</button>
+   
+    <select id="typeSelect">
+        <option value="Polygon">Polygon</option>
+        <option value="Radius">Radius</option>
+    </select>
   </div>
 
-  
+ 
   <div id="sidebar">
     <!-- tab links -->
     <div class="tab">
@@ -46,14 +95,22 @@
       <button class="custom-button" onclick="openCity(event, 'Information')">Information</button>
     </div>
 
-    <!-- tab content -->
+    <!-- begin filter tab content -->
     <div id="Filters" class="tabcontent">
         <h3>Use the categories below to filter 311 complaints</h3>
         <!-- data counter -->
            <div id="counter-section">
             <h4>Complaints Displayed: <span id="data-counter">0</span></h4>
             </div>
+        <!-- spinner -->
+        <div id="spinner" class="spinner"></div>
         
+        <div class="select-container">
+            <a class="active"></a>
+            <input type="text" id="searchBar" placeholder="Search complaints...">
+        </div>
+        
+
            <div class="select-container">
                <label for="borough">Borough:</label>
                <select id="borough" multiple="multiple" style="width: 100%;">
@@ -104,6 +161,9 @@
 
 
 
+
+
+
 <!--colors-->
 <label for="color-select">Category</label>
 <select id="color-select" multiple="multiple">
@@ -122,6 +182,11 @@
 </select>
 
 
+
+
+<!--reset button-->
+  <input type="reset" id="reset-filters" value="Reset All Filters">
+
 </div>
 <!-- end filter tab content -->
 
@@ -131,9 +196,9 @@
 <div id="Information" class="tabcontent">
         <p>Select a feature on the map to see its details here.</p>
     </div>
-</div>
 
-</div>
+
+
 <!-- end information tab content -->
 
 <script>
@@ -164,6 +229,7 @@ document.getElementById("defaultOpen").click();
    
 
    <div id="toggleBtn"></div>
+</div>
 
 
 
@@ -171,31 +237,11 @@ document.getElementById("defaultOpen").click();
   
 
 
-   <!-- modal -->
-   <div id="infoModal" class="modal">
-       <div class="modal-content">
-           <span class="close">&times;</span>
-           <div id="modal-body">
-               <h2>311 DOT Service Requests from 2019 to Present</h2>
-               <h2>About</h2>
-       <div>
-           <h3>Last Updated</h3>
-           <p>July 17, 2024</p>
-       </div>
-       <div>
-           <h3>Data Provided By</h3>
-           <p>https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9/about_data</p>
-       </div>
-           </div>
-       </div>
-   </div>
-    <!-- info button -->
-   <div class="info-icon">
-       <i class="fas fa-info-circle"></i>
-   </div>
+   
 
 
   
+
 
 
   
@@ -210,9 +256,23 @@ document.getElementById("defaultOpen").click();
 <!-- OpenLayers JavaScript library -->
 <script src="./openlayer_webmap/libs/openlayersv9.2.3-package/dist/ol.js"></script>
 <!--custom scripts -->
+<!-- <script src="./openlayer_webmap/main.js"></script> -->
+<!-- <script src="openlayer_webmap/main.js"></script> -->
+
 <script src="./openlayer_webmap/main.js"></script>
-<script src="second.js"></script>
-<script src="./openlayer_webmap/scripts.js"></script>
+<!-- <script src="second.js"></script>  -->
+<script src="https://unpkg.com/ol/ol.js"></script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+<!-- <div id="map" class="map"></div>
+    <div>Selected locations: <span id="info">None</span></div> -->
+
+    <!-- <script type="module" src="main.js"></script> -->
